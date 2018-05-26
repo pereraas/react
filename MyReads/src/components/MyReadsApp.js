@@ -5,7 +5,7 @@ import Search from "./Search";
 import * as BooksAPI from "../services/BooksAPI";
 import Constant from "../utils/Constant";
 import { Route } from "react-router-dom";
-import "../App.css";
+import "../MyReadsApp.css";
 
 //TODO function component.Revisit other components to implement the right type.
 
