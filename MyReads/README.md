@@ -19,6 +19,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 └── src
     ├── components # contains components of the app.
     ├── MyReadsApp.css # Styles of the app.
+    ├── utils # utilities
     ├── services # service layer. Contains A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
