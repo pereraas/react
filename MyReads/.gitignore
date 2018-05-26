@@ -1,0 +1,40 @@
+# IDEA
+**/.idea/*
+**/*.iml
+**/*.iws
+**/*.ipr
+/.vscode
+
+# Log files
+**/logs
+**/*.log
+
+# OSX files
+**/.DS_Store
+**/*.pid.lock
+
+#Eclipse
+**/.metadata/
+**/RemoteSystemsTempFiles/
+**/.classpath
+**/.project
+**/.settings
+**/.recommenders
+
+# build
+**/node_modules
+**/coverage/*
+**/.nyc_output/*
+**/dist
+**/auth-renew-static/
+**/build
+**/bin
+
+# Web Driver
+**/webdriver/
+
+# Gradle
+**/.gradle/**
+
+#e2e
+/e2e/out
