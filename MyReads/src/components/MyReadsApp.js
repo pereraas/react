@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import Header from "./Header";
 import BookCase from "./BookCase";
 import Search from "./Search";
+import NotFoundPage from "./NotFoundPage";
 import * as BooksAPI from "../services/BooksAPI";
 import Constant from "../utils/Constant";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "../MyReadsApp.css";
 
-//TODO function component.Revisit other components to implement the right type.
-
-//group by fn, warning msg, cueernt shelf attr, unncessary local var, spread instead of this.prop., proptypes
-// search page should have the right shelf
 class MyReadsApp extends Component {
   state = {
     shelves: [],
@@ -144,30 +141,40 @@ class MyReadsApp extends Component {
   render() {
     return (
       <div>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <div className="list-books">
-              <Header title="MyReads" />
-              <BookCase shelves={this.state.shelves} handleBookToBeUpdated={this.setBookTobeUpdated} />
-            </div>
-          )}
-        />
+        <Switch>
+          <Route
+            exact={true}
+            path="/"
+            render={() => (
+              <div className="list-books">
+                <Header title="MyReads" />
+                <BookCase shelves={this.state.shelves} handleBookToBeUpdated={this.setBookTobeUpdated} />
+              </div>
+            )}
+          />
 
-        <Route
-          exact
-          path="/search"
-          render={({ history }) => (
-            <Search
-              booksInShelves={[].concat(...this.state.shelves.map(shelf => shelf.books))}
-              handleBookToBeUpdated={b => {
-                this.setBookTobeUpdated(b);
-                history.push("/");
-              }}
-            />
-          )}
-        />
+          <Route
+            exact={true}
+            path="/search"
+            render={({ history }) => (
+              <Search
+                booksInShelves={[].concat(...this.state.shelves.map(shelf => shelf.books))}
+                handleBookToBeUpdated={b => {
+                  this.setBookTobeUpdated(b);
+                  history.push("/");
+                }}
+              />
+            )}
+          />
+          <Route
+            render={() => (
+              <div className="list-books">
+                <Header title="MyReads" />
+                <NotFoundPage />
+              </div>
+            )}
+          />
+        </Switch>
       </div>
     );
   }
