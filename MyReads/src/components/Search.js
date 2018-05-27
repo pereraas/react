@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import * as BookAPI from "../services/BooksAPI";
 import Constant from "../utils/Constant";
 
-//TODO refresh
 class Search extends Component {
   state = {
     query: "",
@@ -12,15 +11,17 @@ class Search extends Component {
   };
 
   updateQuery = q => {
-    localStorage.setItem("query", q.trim());
+    q.trim() ? localStorage.setItem("query", q.trim()) : localStorage.removeItem("query");
     this.setState(() => ({ query: q.trim() }));
   };
 
-  clearQuery = () => {
-    this.updateQuery("");
+  updateResults = results => {
+    this.setState(() => ({ results }));
   };
+
   clearResults = () => {
-    this.setState(() => ({ results: "" }));
+    localStorage.removeItem("results");
+    this.updateResults("");
   };
 
   findIfInShelves = (booksInShelves, book) => {
@@ -38,17 +39,21 @@ class Search extends Component {
   }
 
   componentWillUnmount() {
-    localStorage.setItem("results", "");
-    localStorage.setItem("query", "");
+    localStorage.removeItem("results");
+    localStorage.removeItem("query");
   }
   componentDidUpdate(prevProps, prevState) {
     try {
-      console.log("prevProps", prevProps);
-      console.log("prevState", prevState);
-      console.log("this.state", this.state);
+      const { query: currentQuery } = this.state;
+      const { query: prevQuery } = prevState;
 
-      if (prevState.query.trim() !== this.state.query.trim()) {
-        BookAPI.search(this.state.query)
+      if (prevQuery !== currentQuery) {
+        if (!currentQuery) {
+          this.clearResults();
+          return;
+        }
+
+        BookAPI.search(currentQuery)
           .then(books => {
             let results;
             if (books) {
@@ -61,7 +66,7 @@ class Search extends Component {
               }));
 
               localStorage.setItem("results", JSON.stringify(results));
-              this.setState(() => ({ results }));
+              this.updateResults(results);
             }
           })
           .catch(error => {
