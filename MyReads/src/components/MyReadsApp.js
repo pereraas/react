@@ -36,7 +36,7 @@ class MyReadsApp extends Component {
     id: book.id,
     title: book.title,
     authors: book.authors,
-    backgroundImage: book.imageLinks.thumbnail,
+    backgroundImage: book.imageLinks ? (book.imageLinks.thumbnail ? book.imageLinks.thumbnail : "") : "",
     currentShelf: book.shelf ? book.shelf : "none"
   });
 
